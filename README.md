@@ -4,11 +4,6 @@
 composer require maatwebsite/excel
 ```
 
-## Publier le fichier de configuration
-
-```bash
-php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider"
-```
 
 ## Creer une classe pour l'importation
 
