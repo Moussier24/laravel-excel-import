@@ -7,7 +7,7 @@ composer require maatwebsite/excel
 
 ## Creer une classe pour l'importation
 
-Dans mon cas, j'ai creer une classe TransactionsImport dans le dossier app/Imports en utilisant la commande suivante:
+Dans mon cas, j'ai creer une classe TransactionsImport dans le dossier `app/Imports` en utilisant la commande suivante:
 
 ```bash
 php artisan make:import TransactionsImport
@@ -18,7 +18,7 @@ Cette classe contient une methode array() qui retourne un tableau contenant les 
 
 ## Utilisation de la classe TransactionsImport dans un controller
 
-Dans mon cas, j'ai créé le controller ExcelImportController qui se trouve dans le dossier app/Http/Controllers.
+Dans mon cas, j'ai créé le controller ExcelImportController qui se trouve dans le dossier `app/Http/Controllers`.
 Son url est configuré dans le fichier api.php.
 Ce controller attend un fichier par requêet POST et utilise la classe TransactionsImport pour importer les données du fichier excel.
 Vous pouvez adapter ce controller pour mettre a jour le token des transactions importées.
