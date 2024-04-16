@@ -33,7 +33,7 @@ class ExcelImportController extends Controller
 
                 if ($transaction) {
                     $mode_paiement = $transaction->mode_paiement;
-                    // Si le champ est vide ou null
+                    // Si le champ est vide ou null et que le mode de paiement est ligdicash
                     if ($mode_paiement == "ligdicash" && empty($transaction->token)) {
                         // Met à jour le champ token
                         $transaction->token = $token;
