@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\TransactionsImport;
+use GuzzleHttp\Client;
 
 class ExcelImportController extends Controller
 {
@@ -22,7 +23,7 @@ class ExcelImportController extends Controller
         $trans_id_col_index = array_search("Trans_id", $headers);
         $token_col_index = array_search("token", $headers);
 
-        foreach ($rows as $row) {
+        /* foreach ($rows as $row) {
             $trans_id = $row[$trans_id_col_index];
             $token = $row[$token_col_index];
 
@@ -41,21 +42,29 @@ class ExcelImportController extends Controller
                     }
                 }
             }
-        }
-        return response()->json([
+        } */
+        /* return response()->json([
             'message' => 'Import réussi!',
+        ]); */
+
+        $client = new Client();
+
+
+        $resp = $client->post('https://ddlab.online/test_back/api/reconsTest', [
+            'json' => [
+                'transactions' => array_map(function ($row) use ($trans_id_col_index, $token_col_index) {
+                    return [
+                        'id' => $row[$trans_id_col_index],
+                        'token' => $row[$token_col_index],
+                    ];
+                }, $rows)
+            ]
         ]);
 
-        /* return response()->json([
-            'headers' => $headers,
-            'trans_id_col_index' => $trans_id_col_index,
-            'token_col_index' => $token_col_index,
-            'rows' => array_map(function ($row) use ($trans_id_col_index, $token_col_index) {
-                return [
-                    'transaction_id' => $row[$trans_id_col_index],
-                    'token' => $row[$token_col_index],
-                ];
-            }, $rows)
-        ]); */
+        return response()->json(
+            [
+                'response' => json_decode($resp->getBody()->getContents())
+            ]
+        );
     }
 }
